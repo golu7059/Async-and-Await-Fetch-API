@@ -1,0 +1,52 @@
+<!-- 9. Write a JavaScript program that uses the Fetch method to retrieve data from an API, and then handles errors
+that may occur. For example, you could use the API at https://jsonplaceholder.typicode.com/posts/123456789
+to simulate an error, and then display an error message on the webpage. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Error Handling</title>
+</head>
+<!-- adding css -->
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<body>
+    <h1>Data Retrieval</h1>
+    <div id="result"></div>
+
+    <script>
+        const apiUrl = 'https://jsonplaceholder.typicode.com/posts/123456789';
+
+        const resultElement = document.getElementById('result');
+
+        // Use the fetch method to make a GET request to the API
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                // Parse the response body as JSON
+                return response.json();
+            })
+            .then(data => {
+                console.log('Retrieved data:', data);
+                // Display the data on the webpage
+                resultElement.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                // Handle any errors that occurred during the fetch
+                console.error('Fetch error:', error);
+                // Display an error message on the webpage
+                resultElement.textContent = 'An error occurred: ' + error.message;
+            });
+    </script>
+</body>
+</html>
